@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "salvage"
+version = "0.1.0"
+description = "Verified AI revenue recovery — an agent that structurally cannot claim a recovery that did not happen."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "Rushikesh Goud" }]
+keywords = ["payments", "revenue-recovery", "agents", "verification", "audit", "razorpay"]
+
+# stepproof is pulled straight from its public repo so a reviewer can `pip install .` and
+# have the whole thing work in one command. It is not on PyPI yet. It is a dependency this
+# project consumes and never edits — the audit layer has to be independent of the thing it
+# is auditing, or the guarantee is worth nothing.
+dependencies = [
+    "stepproof @ git+https://github.com/rushikeshgoud19/stepproof.git",
+    "httpx>=0.27",
+    "typer>=0.12",
+    "rich>=13.0",
+    "jinja2>=3.1",
+]
+
+[project.optional-dependencies]
+llm = ["anthropic>=0.40"]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+salvage = "salvage.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/rushikeshgoud19/salvage"
+
+[tool.hatch.build.targets.wheel]
+packages = ["salvage"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
