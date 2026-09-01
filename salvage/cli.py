@@ -154,10 +154,11 @@ def _run_batch(
             os.remove(stale)
             console.print(f"cleared previous run artefact {stale}")
 
-    # Once, for the whole batch. stepproof reads the previous hash off disk on every
-    # append, so a second ledger here would fork the chain (Contract §5.5).
-    stepproof.set_ledger(stepproof.Ledger(cfg.ledger_path))
-
+    # The ledger is bound inside build_pipeline, which is the only place that knows both
+    # the configured path and the moment the run begins -- and which also binds it when the
+    # pipeline is driven from a script instead of this CLI. Binding it a second time here
+    # worked, because stepproof reads the previous hash off disk on every append, but two
+    # owners of one global is a trap the moment the two paths ever differ (Contract §5.5).
     pipeline = build_pipeline(cfg)
     outcomes: list[RecoveryOutcome] = []
     crashed: list[tuple[str, str]] = []

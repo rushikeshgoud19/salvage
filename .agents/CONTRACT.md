@@ -307,13 +307,28 @@ silently reports fake recoveries — the exact failure the project claims to pre
    At 240 records that is the difference between a snappy demo and a stalled one.
 
 7. **`raises=False` on the batch path.** The default is `raises=True` (`verify.py:155`),
-   which throws `VerificationError` and would kill the run. Use `raises=False`, read the
-   returned `Seal.verified`, and map it: `True -> RECOVERED`,
-   `False -> FAILED_VERIFICATION`. `@verified` seals either way (`verify.py:202`).
+   which throws `VerificationError` and would kill the run. Use `raises=False` and read the
+   returned `Seal.verified`. `@verified` seals either way (`verify.py:202`).
+
+   **How the seal maps to an `Outcome` depends on what the verifier actually proved.**
+   `False -> FAILED_VERIFICATION` always. `True` maps by action:
+
+   | Action | What its verifier proves | Seal `True` maps to |
+   |---|---|---|
+   | `RETRY`, `PAYMENT_LINK` | money arrived at the provider | `RECOVERED` |
+   | `NUDGE`, `ESCALATE` | the outreach was recorded | `UNRESOLVED` |
+
+   *Corrected at integration.* This clause originally said `True -> RECOVERED` flatly, and
+   the agent-loop Builder refused it: a sealed NUDGE proves an outreach happened, not that
+   money moved. Counting it would push those rupees into `amount_recovered_paise` and
+   rebuild the fake-revenue bug one layer up — the exact failure this project exists to
+   prevent. The Builder was right and the contract was wrong.
 
 8. **`actor` and `authorization` are mandatory on every money action.**
-   `actor="salvage-agent"`,
-   `authorization=f"policy:{plan.kind.value} cap={cfg.cost_cap_paise}p"`.
+   `actor="salvage-agent"`, and an `authorization` naming the policy that permitted it.
+   *Corrected at integration:* the example string here referenced `cfg`, which §4 never
+   passes to `execute()`. Compose it from what `execute` actually holds —
+   `f"policy:{plan.kind.value} cost={plan.cost_paise}p"`.
    Both default to empty (`ledger.py:31-32`), and an empty actor is the first thing an
    auditor flags.
 
@@ -356,9 +371,17 @@ GET  /payments/{id}   -> {"id": "pay_...", "status": "created|authorized|capture
                           "amount": <paise>, "error_code": "...", "error_description": "..."}
 ```
 
-**Recovered means `status == "paid"` and `amount_paid >= amount_paise`** (link), or
-`status == "captured"` and `amount >= amount_paise` (payment). A `201` from the create
-call is *not* recovery — closing that exact gap is the whole project.
+**Recovered means `status == "paid"` and `amount_paid >= amount_paise`** for a payment
+link. A `201` from the create call is *not* recovery — closing that exact gap is the whole
+project.
+
+**For a payment, recovery means `status == "captured"` and nothing more.** *Corrected at
+integration:* this clause originally also demanded `amount >= amount_paise`, which
+`fetch_payment` cannot satisfy — it takes an id and nothing else (§4), so offline it can
+only echo the recorded fixture amount. Gating on it failed 78 genuinely-captured retries
+for a reason unrelated to whether money arrived. The evidence string must state plainly
+that the amount was not independently confirmed. Online, with a real per-payment response,
+the amount is observable and the check is worth restoring.
 
 ---
 
