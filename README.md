@@ -1,10 +1,40 @@
 # salvage
 
+[![tests](https://github.com/rushikeshgoud19/salvage/actions/workflows/tests.yml/badge.svg)](https://github.com/rushikeshgoud19/salvage/actions/workflows/tests.yml)
+
 **An AI revenue-recovery agent that structurally cannot claim a recovery that did not happen.**
 
 Razorpay AI Buildathon — Track 03, AI Revenue Recovery.
 
 <img src="docs/demo.svg" alt="salvage demo: clone, run, verify, tamper-check, test" width="100%">
+
+---
+
+## Why this shape
+
+A payments company cannot put an autonomous agent on a money path until the agent's claims
+are *checkable*. That is not an engineering preference — it is a reconciliation and
+regulatory constraint. An agent that reports "recovered ₹4.2 lakh" and cannot show which
+rupees actually settled is not a productivity gain; it is an audit liability with a chat
+interface.
+
+So I did not start with the agent. I built the verification layer first —
+[**stepproof**](https://github.com/rushikeshgoud19/stepproof), published as its own library
+with its own CI before this hackathon existed — and then built a revenue-recovery agent on
+top of it to prove the layer does what I claim.
+
+That ordering is the submission. Recovery is the demonstration; **the deployable-agent
+problem is the point**, and [it generalises past recovery](docs/PRODUCTION.md#6--where-the-verification-layer-goes-next)
+to refunds, payouts, mandates, disputes and KYC — every place an agent asserts a success
+nobody checked.
+
+| | |
+|---|---|
+| **[docs/THREAT-MODEL.md](docs/THREAT-MODEL.md)** | every way this agent can hurt a customer, what stops each one, and the gaps that are still open |
+| **[docs/PRODUCTION.md](docs/PRODUCTION.md)** | what would have to change to run it at Razorpay volume, with measured numbers |
+| **[docs/LIVE-RUN.md](docs/LIVE-RUN.md)** | a full run against live Razorpay test mode, including the two things that went wrong |
+| **[docs/ROBUSTNESS.md](docs/ROBUSTNESS.md)** | the same pipeline across 20 independent batches |
+| **[.agents/](.agents/)** | the frozen contract, the plan, and the QA report that grades where the plan was wrong |
 
 ---
 
@@ -259,6 +289,15 @@ call" and passed for the right reason until a `.env` loader was added — after 
 the real API on every run. Now pinned, and the suite is asserted network-free by patching
 `httpx` to raise.
 
+**The agent could charge a customer twice.** Rerun the batch — a replay, a crash recovery,
+a cron that fired twice — and salvage re-presented the instrument for payments that had
+already settled. `detect()` filtered on the record alone; `policy.decide()` checked attempts,
+cost, timing and quiet hours; **nothing read the `settlements` table.** The system of record
+existed the whole time and no code path consulted it — this project's own thesis landing on
+the project for a third time. `already_settled` is now the first stopping rule, ahead of
+every budget, and one batch run twice proves it: run 1 fires 52 money rails and verifies 25
+recoveries; run 2 suppresses exactly those 25 and re-presents nothing.
+
 **Live Razorpay rejected our data.** `"Recurring digits in customer contact are disallowed"`,
 HTTP 400 — undocumented until you hit it. One generated phone number in 240 tripped it.
 
@@ -322,8 +361,21 @@ docs/            ROBUSTNESS.md (20-batch sweep) · LIVE-RUN.md (live test-mode t
 fixtures/        recorded Razorpay responses and recorded model verdicts
 ```
 
-Built with a frozen contract and four parallel agents on file-disjoint lanes. The plan, the
-contract, and the QA report are all in [`.agents/`](.agents/) — including the parts where the
-plan was wrong.
+## How it was built
+
+Four agents, file-disjoint lanes, a contract frozen before any of them started. Everything is
+in [`.agents/`](.agents/) and it is worth opening, because it is the part most repositories
+do not show:
+
+- [`CONTRACT.md`](.agents/CONTRACT.md) — the interface frozen before work began, with three
+  clauses annotated *"Corrected at integration"* and the reason each was wrong.
+- [`QA-REPORT.md`](.agents/QA-REPORT.md) — 19 assertions, each re-verified independently
+  rather than taken from a builder's report, plus the three defects that existed only where
+  the lanes met.
+- `BLOCKERS-*.md` / `REFLECTION-*.md` — what each lane hit, in its own words, including the
+  one that overruled me and was right.
+
+The interesting thing in there is not that it worked. It is that the plan was wrong in three
+specific places, and the record says so.
 
 MIT.

@@ -1,0 +1,55 @@
+name: tests
+
+# An agent that verifies its own claims should be able to show that its own checks ran.
+# This workflow is the repo practising what it sells — and it runs with no credentials,
+# which is the same guarantee a reviewer cloning the repo gets.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        # 3.10 is the floor declared in pyproject. Test the floor and the ceiling: the
+        # union syntax and frozen-dataclass behaviour both differ across that range.
+        python-version: ["3.10", "3.12", "3.13"]
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # stepproof is pulled from its own public repo, deliberately. The audit layer is an
+      # external dependency this project consumes and never edits; installing it from
+      # source here is what keeps that honest.
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Tests
+        run: python -m pytest tests/ -q
+
+      # No RAZORPAY_* and no LLM key exist in this job. If the demo needs one, the offline
+      # path has rotted and a reviewer cloning the repo would hit the same wall.
+      - name: The demo runs with no credentials at all
+        run: python -m salvage demo
+
+      - name: RESULTS.md was actually written
+        shell: python
+        run: |
+          import pathlib, sys
+          body = pathlib.Path("RESULTS.md").read_text(encoding="utf-8")
+          for needed in ("Verification gap", "AI judgment", "Hash chain"):
+              if needed not in body:
+                  sys.exit(f"RESULTS.md is missing its {needed!r} section")
+          print("RESULTS.md complete")
