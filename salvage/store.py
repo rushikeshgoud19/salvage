@@ -135,6 +135,17 @@ class Store:
         )
         self._db.commit()
 
+    @property
+    def path(self) -> str:
+        """The sqlite file itself.
+
+        execute.py's NUDGE/ESCALATE verifiers hand this to stepproof's `sqlite_row_exists`,
+        which opens the file directly rather than going through this object. Without it every
+        outreach action raised AttributeError and was silently swallowed into UNRESOLVED —
+        20 records on the first full run, reported as "0 isolated failures".
+        """
+        return self._path
+
     def attempts_for(self, payment_id: str) -> int:
         row = self._db.execute(
             "SELECT COUNT(*) AS n FROM attempts WHERE payment_id = ?", (payment_id,)

@@ -56,7 +56,7 @@ _TIMEOUT_S = 20.0
 
 # Share of issued links that never leave `created`. Tuned so that a 240-record batch,
 # of which roughly half earns a payment link, yields the ~8-record demo cohort.
-_STUCK_PCT = 6
+_STUCK_PCT = 12
 # Share of the remaining links that actually pay. Sits inside the published 45-65% band
 # for reason-specific recovery (Contract §10.2); it is the single knob for offline yield.
 _PAID_PCT = 62

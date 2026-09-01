@@ -244,9 +244,11 @@ def test_cohort_is_deterministic_and_the_right_size():
     first = {pid for pid in _ids(240) if _is_stuck(_link_id(pid))}
     second = {pid for pid in _ids(240)[::-1] if _is_stuck(_link_id(pid))}
     assert first == second
-    # 6% of issued links. Roughly half a 240-record batch earns a link, so this lands the
-    # ~8-record demo cohort; over all 240 ids the count is about double that.
-    assert 6 <= len(first) <= 26
+    # 12% of issued links. Roughly half a 240-record batch earns a link, so this lands the
+    # ~8-record demo cohort; over all 240 ids the count is about double that. Raised from 6%
+    # at integration: at 6% only 4 records actually surfaced as stuck in a full run, which is
+    # too thin to carry the failure segment of the pitch.
+    assert 20 <= len(first) <= 55
 
 
 def test_fetching_a_link_this_client_never_issued_says_so():
