@@ -254,6 +254,34 @@ def report(
 
 
 @app.command()
+def prove() -> None:
+    """Attack the system's own claims and report what actually happened.
+
+    A README asserts; this executes. Every check tries to make salvage do the thing it
+    says it cannot, on a clean workspace, with no credentials and no network.
+    """
+    from salvage.prove import run_all
+
+    console.print("[bold]salvage — proving its own claims[/bold]")
+    console.print(
+        "[dim]nothing below is quoted from the README; each line just "
+        "ran[/dim]" + chr(10)
+    )
+
+    results = run_all()
+    for r in results:
+        mark = "[green]PASS[/green]" if r.passed else "[red]FAIL[/red]"
+        console.print(f"{mark}  [bold]{r.name}[/bold] — {r.claim}")
+        console.print(f"      [dim]{r.evidence}[/dim]")
+    failed = [r for r in results if not r.passed]
+    console.print()
+    if failed:
+        console.print(f"[red]{len(failed)} of {len(results)} claims did not hold.[/red]")
+        raise typer.Exit(code=1)
+    console.print(f"[green]all {len(results)} claims held[/green]")
+
+
+@app.command()
 def sweep(
     seeds: int = 20,
     out_path: str = "docs/ROBUSTNESS.md",

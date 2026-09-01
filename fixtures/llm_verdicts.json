@@ -401,6 +401,12 @@
     "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
     "reason": "insufficient_funds"
   },
+  "5991aa86d5a9007659f17b363cbc7a44": {
+    "confidence": 0.75,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit auth failure most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
   "5a39d83e5451a0ba8bc526527150b740": {
     "confidence": 0.85,
     "model": "mistral-small-latest",
