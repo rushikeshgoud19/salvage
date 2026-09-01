@@ -28,6 +28,17 @@ output-level judge reads a confident success and agrees.
 **That is the entire project.** Not "an agent that recovers revenue" — everyone has one.
 An agent whose recovery number is *checkable*.
 
+### And it is not an artefact of the recording
+
+The same pipeline, unmodified, pointed at live Razorpay test mode created five real payment
+links, re-fetched each one, and found every one unpaid. **A naive agent would have booked
+₹10,807.55 from those `201`s. salvage reported ₹0.00 arrived** — correctly, because nobody
+pays a sandbox link. Full transcript, including the two things that went wrong:
+[`docs/LIVE-RUN.md`](docs/LIVE-RUN.md).
+
+`status=created, amount_paid=0` — the signature of the engineered failure cohort — turns out
+not to be a synthetic shape at all. It is simply what an unpaid Razorpay link looks like.
+
 ---
 
 ## And it holds across 20 independent batches
@@ -251,6 +262,14 @@ the real API on every run. Now pinned, and the suite is asserted network-free by
 **Live Razorpay rejected our data.** `"Recurring digits in customer contact are disallowed"`,
 HTTP 400 — undocumented until you hit it. One generated phone number in 240 tripped it.
 
+**And live Razorpay rate-limited us mid-run.** Five payment links in about four seconds
+returned `429 Too many requests` — unplanned, unsimulated, and not something I knew about
+before running it. The batch did not stop: that record became one `UNRESOLVED` row carrying
+the verbatim provider error, the rest of the slice ran, the ledger stayed intact, and the
+run exited cleanly. The `run_one` isolation contract holding on live infrastructure against
+a failure nobody wrote a test for is better evidence than the failure I engineered on
+purpose. [`docs/LIVE-RUN.md`](docs/LIVE-RUN.md).
+
 Full grading, with every assertion re-verified independently rather than taken from a
 builder's report: [`.agents/QA-REPORT.md`](.agents/QA-REPORT.md).
 
@@ -261,10 +280,14 @@ builder's report: [`.agents/QA-REPORT.md`](.agents/QA-REPORT.md).
 - **The batch is synthetic.** It is built from Razorpay's own 23 documented failure `reason`
   codes and their `source` field, calibrated against published recovery benchmarks — but the
   records are generated, not merchant data.
-- **The demo runs against recorded fixtures.** Razorpay test-mode credentials were used
-  during development to validate request and response shapes against live traffic, and
-  `salvage run --record` refreshes fixtures from real test-mode calls. No live-mode
-  transaction was ever made and no real money moved.
+- **The demo runs against recorded fixtures**, so that a clone reproduces it exactly with no
+  credentials. The rails are real: [`docs/LIVE-RUN.md`](docs/LIVE-RUN.md) is a full run
+  against live Razorpay test mode, and `salvage run --record` refreshes the fixtures from
+  real test-mode traffic. No live-mode transaction was ever made and no real money moved.
+- **RETRY cannot be exercised end to end live.** salvage's `payment_id`s are generated for
+  the synthetic batch, so `GET /payments/{id}` returns *"The id provided does not exist"*.
+  The verifier handles it correctly — no capture confirmed, so no recovery counted — but
+  proving RETRY on real rails needs payments that exist in the account.
 - **The engineered failure is one I engineered.** Deliberately — the brief asks for it. But
   the same verifier also catches 50 `expired` and 45 `failed` records that arise naturally
   from the batch and were not planted, so it is not a detector for one known trap.
@@ -295,7 +318,7 @@ salvage/
   report.py      RESULTS.md
   cli.py         generate / run / report / demo / sweep
 .agents/         the plan, the frozen contract, the QA grading, what each lane hit
-docs/            ROBUSTNESS.md — the 20-batch sweep
+docs/            ROBUSTNESS.md (20-batch sweep) · LIVE-RUN.md (live test-mode transcript)
 fixtures/        recorded Razorpay responses and recorded model verdicts
 ```
 
