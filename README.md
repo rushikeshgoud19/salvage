@@ -4,106 +4,80 @@
 
 Razorpay AI Buildathon — Track 03, AI Revenue Recovery.
 
-Every money action is verified against real system state after it runs, and sealed into a
-hash-chained ledger. A rupee enters the recovered column only when a verifier has *looked
-at the provider and seen the money*. Not when the API returned `201`. Not when the tool
-reported success. Not when the model said so.
+<img src="docs/demo.svg" alt="salvage demo: clone, run, verify, tamper-check, test" width="100%">
 
-That distinction is not decoration. On the batch below it is worth **₹43,996** — money an
-agent trusting its own success claim would have booked and never received.
+---
+
+## The finding
+
+I ran the identical agent, on the identical batch, scored two ways.
+
+|  | Reports | Rate |
+|---|---|---|
+| An agent that trusts its tools | ₹103,027.43 | **92.6%** |
+| **salvage, seal-verified** | **₹59,031.02** | **53.0%** |
+| **Fiction** | **₹43,996.41** | **42.7% of the claim** |
+
+Same records. Same policy. Same actions. Same provider responses. **Only the scoring rule
+changes.** The naive agent books 43 recoveries; 20 of them actually happened.
+
+It isn't lying and it isn't badly built. It has no way to find out, because every layer
+beneath it honestly reported success. The API returned `201`. The tool relayed `201`. An
+output-level judge reads a confident success and agrees.
+
+**That is the entire project.** Not "an agent that recovers revenue" — everyone has one.
+An agent whose recovery number is *checkable*.
+
+---
+
+## And it holds across 20 independent batches
+
+One run of 48 records cannot carry a number, so I ran twenty. Full detail:
+[`docs/ROBUSTNESS.md`](docs/ROBUSTNESS.md), reproducible with `python -m salvage sweep`.
+
+|  | mean | sd | range |
+|---|---|---|---|
+| Verified recovery rate | **44.1%** | 12.8pp | 19.8% – 63.7% |
+| Naive agent's reported rate | 91.2% | 5.8pp | 75.0% – 98.9% |
+| Share of the naive claim that is fiction | **51.7%** | 13.8pp | 28.2% – 78.2% |
+
+**The naive agent overstated in 20 of 20 batches.**
+
+Read that table honestly, because it cuts both ways. The recovery rate is *noisy* — seed 7,
+the run shown above at 53.0%, sits above the 44.1% mean. Quoting it alone would be quoting a
+favourable draw, which is precisely the cherry-picking this track says it discards. So here
+is the distribution instead.
+
+What is **not** noisy is the gap. Every batch, without exception, an unverified agent
+overstates. Only the magnitude moves.
 
 ---
 
 ## Run it
 
 ```bash
+git clone https://github.com/rushikeshgoud19/salvage && cd salvage
 pip install -e . && python -m salvage demo
 ```
 
-No credentials. No network. No API keys. Generates the batch, runs the full recovery loop
-against recorded fixtures and recorded model verdicts, and writes [`RESULTS.md`](RESULTS.md).
-Takes about a minute.
+No credentials. No network. No config. Generates the batch, runs the full recovery loop
+against recorded Razorpay fixtures and recorded model verdicts, writes
+[`RESULTS.md`](RESULTS.md). Seven seconds.
 
 ```bash
-python -m pytest tests/ -q
+python -m pytest tests/ -q      # 441 passed — and asserted network-free
+python -m salvage sweep         # reproduce the 20-batch table above
 ```
 
-430 tests. The suite is proven to make zero network calls.
-
 ---
 
-## What it does
+## The loop
 
-One loop, end to end: **payment failure → root cause → bounded recovery action → verified
-outcome.**
-
-- **240 synthetic failed payments** built from Razorpay's own 23 documented failure
-  `reason` codes and their `source` field. 80/20 train/holdout, deterministic at seed 7.
-- **Root cause** settled by a lookup table for 21 of 23 codes. A model is reached only for
-  the genuinely ambiguous tail.
-- **Intervention** chosen by timing, not repetition — retrying an `insufficient_funds`
-  decline at hour 1 is worse than not retrying at all.
-- **Execution** gated by [stepproof](https://github.com/rushikeshgoud19/stepproof), an
-  independent verification library this project consumes and never edits.
-- **Every action sealed** into a tamper-evident hash chain that reports exactly where it
-  breaks if anyone edits it.
-
----
-
-## Results
-
-Holdout split, n=48, seed 7, offline fixtures. Full report: [`RESULTS.md`](RESULTS.md).
-
-| Measure | Value |
-|---|---|
-| Value at risk | ₹111,313.68 |
-| **Value recovered, seal-verified** | **₹59,031.02** |
-| **Recovery rate by value** | **53.0%** |
-| Intervention precision | 42.6% |
-| False positives (would have self-healed anyway) | 5, costing ₹0.25 |
-| Suppressed by a stopping rule | 1 |
-| Unresolved | 4 |
-| **Failed verification** | **23 records** |
-| **Verification gap** | **₹43,996.41** |
-| Root-cause accuracy | 100.0% (48/48) |
-| Hash chain | **INTACT**, 230 seals, 0 unchecked |
-
-**Read 53.0% as the centre of a band, not a point.** The holdout is 48 records and the
-recovery rate moves about ±11 percentage points (1 sd) as the batch is resampled across
-seeds. A single quoted percentage from a sample this size would be overclaiming. Published
-benchmarks put reason-specific smart retries at 50–65% and generic daily retries at 20–30%,
-so 53% is where a competent policy should land — a submission reporting 95% would be
-telling you something else.
-
-### The number that matters
-
-**₹43,996.41 across 23 records failed verification.** Each of those actions returned success
-from the provider API. A naive agent books all of them. salvage seals them `verified=False`,
-routes them to the exception list, and keeps their rupees out of the recovered column.
-
-Breaking those down by what was actually observed, across the full 240-record batch:
-
-| Observed provider state | Records | Value | Verdict |
-|---|---|---|---|
-| `status=expired amount_paid=0` | 50 | ₹131,994.20 | link issued, never paid — a correct failure |
-| `status=failed` | 45 | ₹128,357.44 | retry genuinely declined again — a correct failure |
-| `status=created amount_paid=0` | 13 | ₹63,735.56 | **link created, `201` returned, money never arrived** |
-
-That last row is the engineered failure. A payment link is created, the API returns a
-well-formed `201` with a real link id, and the link never reaches `paid`. Every layer above
-it reports success honestly. Only looking at the provider afterwards catches it.
-
-**This is not a synthetic shape.** Creating a real Razorpay test-mode payment link and
-refetching it returns exactly `status=created, amount_paid=0` — verified against live test
-traffic during development.
-
----
-
-## Architecture
+Payment failure → root cause → bounded recovery action → **verified** outcome.
 
 ```mermaid
 flowchart TB
-    A[240 failed payments<br/>Razorpay reason codes + source]
+    A[240 failed payments<br/>Razorpay's 23 real reason codes + source]
     A --> B{detect<br/>revenue at risk?}
     B -->|"no"| SKIP[not at risk]
 
@@ -111,7 +85,7 @@ flowchart TB
         C[classify_rules<br/>21 of 23 codes<br/>no model, no network]
         C -->|"settled 95.8%"| E
         C -->|"card_declined,<br/>unknown code — 4.2%"| D
-        D["LLM<br/>SANDBOXED<br/>reads context, returns a typed<br/>diagnosis. Chooses no action.<br/>Touches no money.<br/>Its prose is never evidence."]
+        D["LLM · SANDBOXED<br/>reads context, returns a typed<br/>diagnosis. Chooses no action.<br/>Touches no money.<br/>Its prose is never evidence."]
         D --> E[RootCause]
     end
 
@@ -123,7 +97,7 @@ flowchart TB
         F -->|"spend + cost > cap"| S
         F -->|"outside timing window"| S
         F -->|"nudge in quiet hours"| S
-        F -->|clear| G[Intervention]
+        F -->|"clear"| G[Intervention]
     end
 
     G --> H[execute the money action]
@@ -172,39 +146,54 @@ sequenceDiagram
     E-->>P: FAILED_VERIFICATION — 0 rupees recovered
 ```
 
+Verification is done by [**stepproof**](https://github.com/rushikeshgoud19/stepproof) — a
+library I wrote and published *before* this hackathon, and which this project consumes as a
+dependency and never edits. The auditor being independent of the thing it audits is not a
+detail; it is the reason the number means anything.
+
+### The audit trail is not decorative
+
+Every money action is sealed into an append-only hash chain. Forge one record and the chain
+names it:
+
+```
+BEFORE  : chain intact (230 records)
+forging record 5 (issue_payment_link): verified False -> True
+AFTER   : chain_intact=False
+          record 5 was modified after sealing: contents hash to
+          67385278dfec... but it carries 6ea52666c564...
+```
+
 ---
 
-## Why the model is only on 4.2% of the batch
+## Why the model is on only 4.2% of the batch
 
 The track's first judging criterion is **AI judgment**: forcing an LLM into a problem a rule
-solves better is explicitly marked down. So the model is sandboxed and stripped of execution
-authority. It reads unstructured context and returns a **typed diagnostic proposal**. It
-never selects an action, never touches money, and its prose is never used as evidence —
-stepproof's narration guard would reject it anyway.
+solves better is explicitly marked down. So the model is **sandboxed and stripped of
+execution authority**. It reads unstructured context and returns a *typed diagnostic
+proposal*. It never selects an action, never touches money, and its prose is never used as
+evidence — stepproof's narration guard rejects narration outright.
 
 21 of Razorpay's 23 documented reasons invert to a cause deterministically. The model is
 reached only for `card_declined` — which names no cause at all — and unrecognised codes.
 
-**And it earns its place there, measurably.** On the 7 records in the full batch the rules
-cannot settle:
+**It earns those 4.2%, measurably.** On the 7 records in the batch the rules cannot settle:
 
-| | correct |
+|  | correct |
 |---|---|
 | rules alone | 0 / 7 |
 | with the model | **6 / 7** |
 
 Holdout root-cause accuracy: **95.8% → 100.0%**. The single miss is a `risk_blocked` that is
-genuinely indistinguishable from the fields available — a human reading the same row could
-not call it either.
+genuinely indistinguishable from the fields available.
 
-Getting there required giving the model a real domain fact. Asked cold, it answered
-`auth_failed` at 0.95 confidence and scored **0/7** — confidently wrong is worse than
-abstaining. Told the actual base rate (a bare issuer `card_declined` in Indian card payments
-most often masks insufficient funds; a failed OTP reports itself explicitly), it scored 6/7.
+Getting there needed one real domain fact. Asked cold, the model answered `auth_failed` at
+**0.95 confidence** and scored **0/7** — confidently wrong is worse than abstaining. Told the
+actual base rate (a bare issuer `card_declined` in Indian card payments usually masks
+insufficient funds; a failed OTP reports itself explicitly), it scored 6/7.
 
-Model verdicts are recorded to `fixtures/llm_verdicts.json` and replayed. The batch is
-deterministic, so one recorded run makes every later run free, offline, and identical —
-including yours, with no key at all.
+Verdicts are recorded to `fixtures/llm_verdicts.json` and replayed, so your clone reproduces
+them with no key and no network.
 
 ---
 
@@ -228,60 +217,62 @@ Every suppression names the rule that produced it.
 
 ## What broke, and how it was recovered
 
-The track asks for this explicitly. All of it is real and none of it is tidied.
+The track asks for this. None of it is tidied.
 
-**Two builders stalled and produced nothing.** The first parallel run put six tasks on each
-of two agents; both hit a 600-second watchdog while still reading, and were killed with zero
-files written. The fix was structural: four smaller agents on four git worktrees, each with a
-narrowed reading list and the dependency facts inlined rather than left to be discovered.
-The second run landed all four lanes.
+**Two builders stalled and produced nothing.** The first parallel run gave six tasks each to
+two agents; both hit a 600-second watchdog while still reading, and died with zero files
+written. Fixed structurally: four smaller agents on four git worktrees, narrowed reading
+lists, dependency facts inlined rather than left to be discovered. The second run landed all
+four lanes with zero merge conflicts.
 
 **Three defects existed only at the seams.** Every lane passed its own tests. All three
-failures appeared only when the lanes were composed:
+appeared only in composition:
 
 1. `Store` exposed only a private `_path`, so every NUDGE and ESCALATE verifier raised
    `AttributeError` and was swallowed into `UNRESOLVED`. The run printed **"0 isolated
-   failures"** while 20 records had failed. That is this project's own thesis biting the
-   project — an action reporting a clean outcome while the effect never happened.
-2. RETRY verification gated on `amount >= amount_paise`, but `fetch_payment` takes an id and
-   nothing else, so offline it can only echo a fixture amount. **78 genuinely captured
-   retries failed for a reason unrelated to whether money arrived.** This one was a contract
-   defect, not a coding error: the spec demanded a check the interface could not satisfy.
+   failures"** while 20 records had failed. *This project's own thesis, biting the project.*
+2. RETRY verification gated on an amount the interface cannot supply offline — **78
+   genuinely captured retries failed** for a reason unrelated to whether money arrived. A
+   contract defect, not a coding error: the spec demanded a check the signature could not satisfy.
 3. The engineered failure cohort surfaced only 4 records — too thin to demonstrate anything.
 
 Fixing them moved holdout recovery from 41.4% to 53.0%.
 
 **A builder argued with the contract and won.** The spec said a verified seal maps to
 `RECOVERED`. The builder refused for NUDGE and ESCALATE: their verifier proves *the outreach
-was recorded*, not *that money arrived*. Counting those would push the rupees into the
-recovered column and rebuild the fake-revenue bug one layer up. The contract was corrected.
+was recorded*, not *that money arrived*. Counting those would rebuild the fake-revenue bug
+one layer up. The contract was corrected, and it is annotated with why.
 
 **The test suite was quietly making paid API calls.** Two tests asserted "no key → no model
-call" and passed for the right reason until a `.env` loader was added — after which they
-silently hit the real API on every run. Now pinned, and the suite is asserted network-free.
+call" and passed for the right reason until a `.env` loader was added — after which they hit
+the real API on every run. Now pinned, and the suite is asserted network-free by patching
+`httpx` to raise.
 
 **Live Razorpay rejected our data.** `"Recurring digits in customer contact are disallowed"`,
-HTTP 400 — undocumented until you hit it. One generated phone number in 240 tripped it, which
-would have been one dead record and a miserable debug. The generator now resamples.
+HTTP 400 — undocumented until you hit it. One generated phone number in 240 tripped it.
 
-Full detail: [`.agents/QA-REPORT.md`](.agents/QA-REPORT.md), plus per-lane `BLOCKERS-*.md`
-and `REFLECTION-*.md`.
+Full grading, with every assertion re-verified independently rather than taken from a
+builder's report: [`.agents/QA-REPORT.md`](.agents/QA-REPORT.md).
 
 ---
 
 ## Honest limits
 
-- **The demo runs offline against recorded fixtures.** Razorpay test-mode credentials were
-  used during development to validate the request and response shapes against live traffic;
-  `salvage run --record` refreshes the fixtures from real test-mode calls. No live-mode
-  transaction was ever made, and no real money moved.
-- **The batch is synthetic**, built from Razorpay's documented failure taxonomy and
-  calibrated against published recovery benchmarks. It is not merchant data.
-- **n=48 on the holdout** is small. See the band caveat above.
-- **The counterfactual label is generated, not observed.** `would_self_heal` is what makes
-  false-positive cost measurable at all, but it is a modelling assumption.
-- **The model is one call on one record type.** It is not doing the heavy lifting here, and
-  the report says so in the numbers rather than in prose.
+- **The batch is synthetic.** It is built from Razorpay's own 23 documented failure `reason`
+  codes and their `source` field, calibrated against published recovery benchmarks — but the
+  records are generated, not merchant data.
+- **The demo runs against recorded fixtures.** Razorpay test-mode credentials were used
+  during development to validate request and response shapes against live traffic, and
+  `salvage run --record` refreshes fixtures from real test-mode calls. No live-mode
+  transaction was ever made and no real money moved.
+- **The engineered failure is one I engineered.** Deliberately — the brief asks for it. But
+  the same verifier also catches 50 `expired` and 45 `failed` records that arise naturally
+  from the batch and were not planted, so it is not a detector for one known trap.
+- **n=48 per holdout.** Hence the 20-seed sweep rather than a single quoted number.
+- **`would_self_heal` is a modelling assumption.** It is what makes false-positive cost
+  measurable at all, and it is generated, not observed.
+- **The model does 4.2% of the work.** By design, and argued for above — but if you want an
+  LLM at the centre of the loop, this is not that submission.
 
 ---
 
@@ -299,14 +290,17 @@ salvage/
   store.py       SQLite system of record — a settlement row means money arrived
   pipeline.py    the record loop. never raises.
   metrics.py     the scoring — verified seals only
+  baseline.py    the same run scored the way everyone else scores it
   audit.py       hash-chain integrity
   report.py      RESULTS.md
-  cli.py         generate / run / report / demo
-.agents/         the plan, the frozen contract, the QA report, what each lane hit
+  cli.py         generate / run / report / demo / sweep
+.agents/         the plan, the frozen contract, the QA grading, what each lane hit
+docs/            ROBUSTNESS.md — the 20-batch sweep
 fixtures/        recorded Razorpay responses and recorded model verdicts
 ```
 
-Built with a frozen contract and four parallel agents on file-disjoint lanes; the plan, the
-contract, and the QA grading are all in [`.agents/`](.agents/).
+Built with a frozen contract and four parallel agents on file-disjoint lanes. The plan, the
+contract, and the QA report are all in [`.agents/`](.agents/) — including the parts where the
+plan was wrong.
 
 MIT.

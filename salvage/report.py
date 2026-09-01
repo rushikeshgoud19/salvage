@@ -14,6 +14,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Iterable, Sequence
 
+from salvage.baseline import compare
 from salvage.types import GroundTruth, Outcome, RecoveryOutcome
 
 if TYPE_CHECKING:  # pragma: no cover - typing only
@@ -177,6 +178,40 @@ def render(
         "success claim would have booked as recovered and never received."
     )
     add("")
+
+    if truth is not None:
+        b = compare(outcomes, truth, split=metrics.split)
+        add("## The same run, scored the way everyone else scores it")
+        add("")
+        add(
+            "Identical records, identical policy, identical provider responses. Only the "
+            "scoring rule changes: the baseline books a recovery when a money-rail action "
+            "returned success, which is what an agent without a verification layer has to "
+            "do. Outreach is never counted for it -- a strawman would prove nothing."
+        )
+        add("")
+        add("| | Reports | Rate |")
+        add("|---|---|---|")
+        add(
+            f"| Naive agent (trusts the API) | {rupees(b.naive_reported_paise)} "
+            f"| {b.naive_rate:.1%} |"
+        )
+        add(
+            f"| **salvage (seal-verified)** | **{rupees(b.verified_arrived_paise)}** "
+            f"| **{b.verified_rate:.1%}** |"
+        )
+        add(
+            f"| **Fiction** | **{rupees(b.fiction_paise)}** "
+            f"| **{b.fiction_share:.1%} of the claim** |"
+        )
+        add("")
+        add(
+            f"The naive agent books {b.naive_records} recoveries. "
+            f"{b.verified_records} of them actually happened. It is not lying and it is not "
+            f"badly built -- it simply has no way to find out, because every layer beneath "
+            f"it honestly reported success."
+        )
+        add("")
 
     add("## Audit trail")
     add("")

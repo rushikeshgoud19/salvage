@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 630" width="900" height="630" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="13.5">
+  <style>
+    /* Default state is FULLY VISIBLE. The animation runs from hidden, so any renderer that
+       blocks CSS animation shows the complete terminal instead of a blank card. */
+    .ln { opacity: 1; animation: type 11.4s steps(1) infinite; }
+    @keyframes type { 0% {opacity:0} 3% {opacity:1} 92% {opacity:1} 100% {opacity:0} }
+  </style>
+  <rect width="900" height="630" rx="10" fill="#0d1117" stroke="#30363d"/>
+  <rect width="900" height="38" rx="10" fill="#161b22"/><rect y="28" width="900" height="10" fill="#161b22"/>
+  <circle cx="22" cy="19" r="6" fill="#ff5f56"/><circle cx="42" cy="19" r="6" fill="#ffbd2e"/><circle cx="62" cy="19" r="6" fill="#27c93f"/>
+  <text x="450.0" y="24" fill="#8b949e" font-size="12" text-anchor="middle">salvage - verified revenue recovery</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:0.00s" x="26" y="64" fill="#7ee787">$ git clone https://github.com/rushikeshgoud19/salvage &amp;&amp; cd salvage</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:0.34s" x="26" y="85" fill="#8b949e">Cloning into &#x27;salvage&#x27;... done.</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:1.02s" x="26" y="127" fill="#7ee787">$ python -m salvage demo            # no keys, no network, no config</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:1.36s" x="26" y="148" fill="#8b949e">wrote 240 payments -&gt; data/payments.json and 240 labels -&gt; data/truth.json</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:1.70s" x="26" y="169" fill="#8b949e">recovering  ---------------------------------  240/240</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:2.04s" x="26" y="190" fill="#c9d1d9">ran 240 records: 102 seal-verified recoveries, 0 isolated failures</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:2.38s" x="26" y="211" fill="#58a6ff" font-weight="600">₹59,031.02 recovered of ₹111,313.68 at risk on the holdout split</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:2.72s" x="26" y="232" fill="#ff7b72" font-weight="600">verification gap ₹43,996.41   -&gt;   RESULTS.md</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:3.40s" x="26" y="274" fill="#7ee787">$ head RESULTS.md    # the same run, scored the way everyone else scores it</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:3.74s" x="26" y="295" fill="#8b949e">  Naive agent (trusts the API)       ₹103,027.43   92.6%</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:4.08s" x="26" y="316" fill="#3fb950" font-weight="600">  salvage (seal-verified)             ₹59,031.02   53.0%</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:4.42s" x="26" y="337" fill="#ff7b72" font-weight="600">  Fiction                             ₹43,996.41   42.7% of the claim</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:4.76s" x="26" y="358" fill="#8b949e">  43 recoveries booked. 20 of them actually happened.</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:5.44s" x="26" y="400" fill="#7ee787">$ python -   # forge one failed seal into a success, then re-audit</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:5.78s" x="26" y="421" fill="#8b949e">BEFORE  : chain intact (230 records)</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:6.12s" x="26" y="442" fill="#d29922">forging record 5 (issue_payment_link): verified False -&gt; True</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:6.46s" x="26" y="463" fill="#ff7b72" font-weight="600">AFTER   : chain_intact=False</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:6.80s" x="26" y="484" fill="#ff7b72" font-weight="600">          record 5 was modified after sealing: contents hash to</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:7.14s" x="26" y="505" fill="#ff7b72" font-weight="600">          67385278dfec... but it carries 6ea52666c564...</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:7.82s" x="26" y="547" fill="#7ee787">$ python -m pytest tests/ -q</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:8.16s" x="26" y="568" fill="#3fb950" font-weight="600">441 passed in 3.36s</text>
+  <text xml:space="preserve" class="ln" style="animation-delay:8.50s" x="26" y="589" fill="#8b949e">(asserted network-free: httpx patched to raise, still green)</text>
+</svg>

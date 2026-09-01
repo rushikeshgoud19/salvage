@@ -1,8 +1,176 @@
 {
+  "000009554a582c6c8eda7bf57acfb2df": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "001cbfe2575866535effcfe529241fc7": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "01bad756ea0854d4768a4975dbd7effa": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "046a7265d9d19f0dd4329fcb90581efd": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "0a9045abfb205d3724dfb5563afc7b56": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "0b4e569eb3c71b4968a8e19750851f6e": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "0be4c16321496122632bb418b86f82fd": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' from issuer most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "0c84d5e9c5c5a3bb7056264547bb9231": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer decline with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "0cf31e38d970b7d8bc246cb30b21146c": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "0d6eb2fa7d1c34c93f59cf5a7c1fc1a9": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' in Indian card payments most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "0e2ceb6ef4448a07e866d94386ac5c32": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no issuer reason most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "0f82b6d5ea7d4370e292dca9a226be6e": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "0fa5d6a1fa923e1184d2b684622bbe5d": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "17164974c5d4a7a456f5390f21f6dc39": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' in Indian card payments most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "19a78c72ded50ee73484566bfb905b3a": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "1a48a1c5083e4ce839b68eec714ff6ba": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "1c21ffd398a33107b8773c01bbaaa89e": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' from issuer most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "1c6635ddf9196371f6aecbf296e98bf2": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' from issuer most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "1e832a314a61abaacbe7a8c51ac8a3c1": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "206a488723f16073bde6ed9932b2e872": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "216e9135458973eba9de262ced6fe7a3": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "21a7153e5efa82f18fc922217f7c0436": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
   "2357163c98e231a73902d1013b81c1e7": {
     "confidence": 0.85,
     "model": "mistral-small-latest",
     "rationale": "Bare 'card_declined' from issuer most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "23f42b3f3c81a415d21c33e49c7ca4a1": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no issuer reason most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "2748f18c4de10ca9a8439fc481feb854": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "274c3bdc1835a5a472f5346ca252a0e5": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "2779cce88ab3f7b4aca7cb0be70f1962": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "28b410eb7c57b0ef799411c6e1068d3c": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "297f8e59999b96ecbe823ed691f81acd": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
     "reason": "insufficient_funds"
   },
   "29d3e9376887031d3115f57551e744e5": {
@@ -11,10 +179,616 @@
     "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
     "reason": "insufficient_funds"
   },
+  "2a5cbadb90ea7b56c29a7812963cc7eb": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "2bb6dbc64844cdb833db23cd8931b37e": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "2cb4bf4ca3369876711db2c1956160fd": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "2cfe73911b16dfc197220d97b3972f29": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "2d51e04c5a092223ef066f1fcce17ddf": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "2e5cd884b09603cfb59fb5e326a7a146": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' from issuer most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "2e701203dbc5f92ce7c1fc9925b48f90": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "301129b160e816742bf23823cbb19f20": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' in Indian card payments most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "30a678c5407e6b606d5aa733dc746568": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' in Indian card payments most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "32dfa9e22f9458a8479f909cb6b3a2ac": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "330a5ce07f170d0d2b0f401a32af7f9d": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "3af8aae8a81ae943cfb9aa1a943e7fe5": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "3cb181c19655e401b7a43bcf9a83338b": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no issuer reason most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "3d8dd297674c59f869c8289174bd2fee": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "420d71a21ecddb0613e682275d0ba04c": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "4336a3eb6397c33696b6b45d4d68457d": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "437dfed03b0c28603b54e60881ca9742": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "46389236931b6ec2cf60457e1238328e": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "467b167559ff5d98fe4125d8591ab9d0": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "47d605d3a541fa9750dd497ad626f06e": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' in Indian card payments most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "480a7ca9a54640c4940b2e3f0a6faa11": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' from issuer most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "48a0f223e0345a9584ba2277f5c7b12a": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Generic 'card_declined' with EMI method suggests insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "4bfc76e8f0465941c193b67d5c58c74c": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "4dcbc95d5230316a6c73e0419370b858": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
   "4dd2a53dc20a415ce0384aa77d37bb68": {
     "confidence": 0.85,
     "model": "mistral-small-latest",
     "rationale": "Bare issuer 'card_declined' with no explicit auth failure most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "4e3a3b21e1cca1354e9062658f54579a": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "4e3e343fedbc64c401c4292744d827d6": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "4fb66e3823e30b6e8be53d8b4039a8a6": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "51c5d0f0dffb9e5b7817a2c587f06527": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "51ef11ec2c9bb8d5625b2edf7cdbd779": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "54e5b3c0adead929483809a91fb10b9b": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "5669b8d18879a51828c18c84b5d6432a": {
+    "confidence": 0.75,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "570e063761d66d667b9a30deca563393": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "58ff1f2d48c98d1bd97747cedf303fb7": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "595efee9837c13d9353a094410df6565": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "5a39d83e5451a0ba8bc526527150b740": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "5c8d4eaed735dfde208c511a975e0d94": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "5d716d3a29eb24fe11aad29c3c9d899e": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "5e16933f5921cf5e0aceccbb74ffaf4c": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "61251210c8df8e18f5090a626417be9f": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "61adadb618652d230aec8963e1bbf4a6": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "62e6ffe70b63564d9a341c27dee08286": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "676375065a704bf0a6aa3842ab6bd010": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' from issuer most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "681f073aac6303c8f4a1908e736ffad1": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "698921136171c4a033bb94e350d5bb9e": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "6cb6ef34d441d2c5e41b621d4f0e38d4": {
+    "confidence": 0.75,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "6ccf870eac10444dee39b6d27cfc235b": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "6ea22fe6432e49d868b3de23018b90f2": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "6feb703f07ade41624e19a1503c1df45": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "7534d68963fc4a3a265ee1ee04f5ecbd": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' from issuer most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "7731825b5f06375e4f57bc47b87198a9": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "77ef13ba9f711a6bebd75e80747bed19": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "7972258d182e7a2345906d6699879d55": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "79ab907be505063cc4a41823aafcdab1": {
+    "confidence": 0.75,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' from issuer most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "7a99cfb983707ed69e19b0a3d5e74d34": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "7c5469e50f3e6fbe4e9b82fc82f6fb9e": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "7e3a289f6ef2a2bfec93ec34a1da37a5": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "800225c3c0b4a96decf5bf77642070b0": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "82076f301f9fb298f2980d57b0926b6a": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "83ae603da58509d4d7f03bec230492e6": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "83d3526e3cbbb7604731d6b103055884": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' from issuer most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "84ee3fc4df80e60bc7de4f95e2effa34": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "86265ebfb591ebaa23ba97dc20a4c10c": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "8657f21bd84f9b24deacee2b8d29f223": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "87b7adbb349977532ed9af6ec54fabb9": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "87bfb22fdf8371e6915e0f273b2e0cc7": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "89d283642d86794ff2e0acb088b2c8f4": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "8e32b17f2f7dd462b6f99b9a12e31fa6": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "8e77273ee2c9fb147ffc2500a443e6d0": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "8ecdd1948305a35616dcc41436a3306f": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' in Indian card payments most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "8ef2fa5b30d071a8720d4c01378700f2": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' from issuer most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "8f62fc88b7c6715885a31544aead2cb7": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "906d40252dbc6dcdc23133ac6d0ed645": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' from issuer most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "90c7bcc97b190c8fa5c9213aac14f89d": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' in Indian card payments most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "9145313a01e992798e96168a42c5bb47": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "91dae22302fc3f451f113cc5d0e6b486": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "943d6b97ba04bb60112f5088fa7b57c9": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "94780df7b3a8dbba59ea1942c5068efa": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "953bb905fbd7846c03f20fcf01e1af64": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "95f35d2ee97a542b799333072c1cb45f": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "9ad48b4bcbb6c156a0b10ab1110be0e0": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "9cc49cf18125b8605f317432b1c1365e": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "9e9bc98f8ef10f8ce89134a7d4bfc6e8": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "9fa2d0ee1b6357886cf3294a312e87cb": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "a2c845107e5903600afe56118265ec78": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "a4266bb81539d74839a1277f9b7bff61": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "a5e9d46181a7776f8a37493206b71059": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "a6c7602f298a17af435f9648da259090": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' in Indian card payments most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "a747f5f16c67a37e5a7567e19b3fdc73": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "a8a0a4b652700a52b44f496f4cd0e270": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "aa4ae63b33b2783c60458a273b4b6810": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "acceda1a0ca87b9ce10dac86a8856023": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "aeced4d68b3f5e5e385026f65fd749a4": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' from issuer most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "aed8228d840a0b77416ebd8d879f911e": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "af20d2f2a0673efa567d2869ba91e818": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "affb4761d9fcded498be2882374807db": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "b1a0449c904b830f659c8385845bf11e": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' from issuer most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "b254e25f8319e3ffa7989f970c68a0a9": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "b2fbf44a3793d5bd2be295967ca746a3": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "b4412a274a336b1beb1d0a5ea23a00c1": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "b4e0001baab1599666de2a5fb8caf3ae": {
+    "confidence": 0.75,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "b557fa7808e4102708908a4dc84e2104": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
     "reason": "insufficient_funds"
   },
   "b638b44af42eac624e67c1592ddfff46": {
@@ -23,16 +797,244 @@
     "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
     "reason": "insufficient_funds"
   },
+  "bbf65782fa8cae4a3021e00ab1de6995": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "bcd21dc3293399c39aa9425e0b3ada26": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "bcd407cd4724933148cfacfe7a244560": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "bdbca50b1331c7d3e54c7e2a2271b5ae": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "bdcdf1c9659649851cfaf41a6b4d59f6": {
+    "confidence": 0.75,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "be2b5c22c90cf1d40cd26a4f873d469b": {
+    "confidence": 0.75,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "c0c8fd7cdf9cfa1bdad5a8d950b23f30": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' from issuer most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "c167e3c904d917439e2d3bc7c8d05a00": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' from issuer most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "c22c86404a69267929bb77dee6d1df1d": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "c2e9215f276a54aaa9d9251efeb0213b": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "c324ecfb9e13759d3b4347b57d3e047c": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no issuer reason most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "c351b37f060cb2814ad81b1bea636ded": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "c54683f1e56cada7530a6aa205cd4737": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "c5f9d225277fb5ac2f16e2995f8f2e5a": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "ca71131af7b385ec814ae304978511bd": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "cdc22b4877190b63abd7c47dad48fc65": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "cde5ea31bea5e39530dfa7277f1f7c13": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "ce5318019154dc5bacdb7e68c28c4685": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "cf8d751f604698499226961fbf367b6f": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "d21187d9d0ae4d06e69183a4ede441c4": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' in Indian card payments most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "d2ce1b89b4eaf55f9e9260fb6dc7f162": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "d3e32c336a0bf89a27b8e741c1ddb6bf": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "d6924a81bff52d876677aa8b8cd2a91d": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "dbe7f38b673f54ca89e43786a80cc7bf": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "dc3a45c85899c674b0857c3c9f257920": {
+    "confidence": 0.75,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "dd4203af99dda2fab5bee53e2d04030e": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "dd5ee978b480938f9a2ef9b59154cac6": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "df513fd4f7a042f23cb1d4e2c7062df3": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' in Indian card payments most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
   "dfe10eb7d6d87e8cf8c07e7c45585a3b": {
     "confidence": 0.85,
     "model": "mistral-small-latest",
     "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
     "reason": "insufficient_funds"
   },
+  "e4091cdd16d2880d2f6008069595cbf6": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "e454d7163c4a02ff902dc10d0188c321": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "e4ac997ecbc8ca00932ce30a1f91f7d0": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' from issuer most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
   "e544c6d58c55557d69039ba79b55f057": {
     "confidence": 0.85,
     "model": "mistral-small-latest",
     "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "e5acdd9474b63873eda3bfd23689ef31": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "e76c80202e1a8be4b7e8fae7457c0dce": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "e7ffc6762b5c076e71cfc685a1d8ccd0": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "e9d85ff5f515022cb7f9e0a042761e65": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "e9ff4c7935b868a1d2fa9dadb821c490": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "ea348c2cabe1d0004bec848eaa173c9a": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "eb06d5f1fbae1603e9c5959cdf9bb35b": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
     "reason": "insufficient_funds"
   },
   "eb16467132e6d602e91b327fd6c33f02": {
@@ -51,6 +1053,72 @@
     "confidence": 0.85,
     "model": "mistral-small-latest",
     "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "eddb6cbbf7838e0f5694e2a14a455c6d": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "ee781c0ce38d1c7754f5b20325a6613f": {
+    "confidence": 0.75,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' in Indian card payments most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "efce4ba574b81a23705ae1021f8e83d8": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "f2779f964e186fbd3bd5fbcf13810eda": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "f554c06ab6f0fd07d343caf541a1ff68": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "f8d1695b6800347d7bf7cffc13309d43": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' in Indian card payments most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "f8d5dd29befe9396f5b32c5ce3ad3c8f": {
+    "confidence": 0.75,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' from issuer most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "f9fc4eb539411b5e02415eb26a6e1ec9": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "fb4606530e2fb507089c510c71f5e14e": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' in Indian card payments most often indicates insufficient funds.",
+    "reason": "insufficient_funds"
+  },
+  "fee6db07d17664ceae8daa015c3da949": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare 'card_declined' with no explicit cause most often indicates insufficient funds in Indian card payments.",
+    "reason": "insufficient_funds"
+  },
+  "ffd67643d27539fb41657da50037d2c0": {
+    "confidence": 0.85,
+    "model": "mistral-small-latest",
+    "rationale": "Bare issuer 'card_declined' with no explicit cause most often indicates insufficient funds.",
     "reason": "insufficient_funds"
   }
 }
