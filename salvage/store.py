@@ -146,6 +146,20 @@ class Store:
         """
         return self._path
 
+    def is_settled(self, payment_id: str) -> bool:
+        """Has money already arrived for this payment?
+
+        This is the question that must be asked before any money rail is touched, and it
+        was missing. `settlements` was written and never read: a rerun, a replay, a crash
+        recovery or a duplicate feed would re-present an instrument for a payment the
+        customer had already paid, and charge them twice. The row existed the whole time.
+        Nobody called it.
+        """
+        row = self._db.execute(
+            "SELECT 1 FROM settlements WHERE payment_id = ? LIMIT 1", (payment_id,)
+        ).fetchone()
+        return row is not None
+
     def attempts_for(self, payment_id: str) -> int:
         row = self._db.execute(
             "SELECT COUNT(*) AS n FROM attempts WHERE payment_id = ?", (payment_id,)

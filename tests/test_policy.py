@@ -20,12 +20,16 @@ DAY = 86400.0
 
 
 class FakeStore:
-    """Only the two reads `decide` makes. Attempts and spend are the inputs to two of
-    the four stopping rules, so the test drives them directly."""
+    """Only the three reads `decide` makes. Settlement, attempts and spend are the inputs
+    to three of the five stopping rules, so the test drives them directly."""
 
-    def __init__(self, attempts: int = 0, spend: int = 0) -> None:
+    def __init__(self, attempts: int = 0, spend: int = 0, settled: bool = False) -> None:
         self._attempts = attempts
         self._spend = spend
+        self._settled = settled
+
+    def is_settled(self, payment_id: str) -> bool:
+        return self._settled
 
     def attempts_for(self, payment_id: str) -> int:
         return self._attempts
@@ -266,3 +270,37 @@ def test_decide_never_returns_an_unmapped_kind(reason):
     assert got.kind in set(ActionKind)
     assert got.payment_id == "pay_A1"
     assert got.reason  # a decision that cannot explain itself is not auditable
+
+
+# ── already_settled: the rule whose absence was a double-charge ─────────────────
+
+@pytest.mark.parametrize("reason", list(FailureReason))
+def test_a_settled_payment_never_gets_a_money_rail(reason):
+    """No cause, no elapsed time, no budget is a reason to charge a paid customer again.
+
+    This rule was missing entirely. `settlements` was written by `mark_settled` and read by
+    nobody, so a rerun -- a replay, a crash recovery, a duplicate feed -- would re-present
+    the instrument for a payment that had already been paid. Parametrised across every
+    FailureReason because the guarantee must not depend on the diagnosis.
+    """
+    for elapsed in (1 * HOUR, 73 * HOUR, 400 * HOUR):
+        plan = plan_for(reason, elapsed, store=FakeStore(settled=True))
+        assert plan.kind is ActionKind.NONE
+        assert plan.suppressed_by == "already_settled"
+        assert plan.cost_paise == 0
+
+
+def test_already_settled_outranks_every_other_stopping_rule():
+    """It is checked first on purpose: the others are budgets, this one is a safety property."""
+    plan = plan_for(
+        FailureReason.BANK_DOWN, 2 * HOUR,
+        store=FakeStore(attempts=99, spend=999999, settled=True),
+    )
+    assert plan.suppressed_by == "already_settled", (
+        "a settled payment must report the settlement, not an exhausted budget"
+    )
+
+
+def test_an_unsettled_payment_is_unaffected_by_the_new_rule():
+    plan = plan_for(FailureReason.BANK_DOWN, 2 * HOUR, store=FakeStore(settled=False))
+    assert plan.kind is not ActionKind.NONE

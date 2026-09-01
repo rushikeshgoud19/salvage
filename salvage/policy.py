@@ -73,12 +73,25 @@ def decide(
 ) -> Intervention:
     """Choose one intervention for one payment, or decline and say which rule declined.
 
-    The four stopping rules are checked in a fixed order — attempts, cost, timing,
+    Five stopping rules, checked in a fixed order — settled, attempts, cost, timing,
     quiet hours — because the order is what makes a suppression explainable: the first
     rule that fires is the one reported.
+
+    `already_settled` is first and is not negotiable. Every other rule is a budget; this
+    one is a safety property. Charging a customer who has already paid is the worst thing
+    a recovery agent can do, and it is the failure mode a rerun produces by default.
     """
     kind, in_window, why = _plan(cause.reason, now - p.failed_at, now)
     cost = COST_TABLE[kind]
+
+    # FIRST, before anything else. A customer who has already paid must never be charged
+    # again, and no attempt budget, cost cap or timing window is a reason to reconsider
+    # that. Everything downstream assumes this has already been ruled out.
+    if store.is_settled(p.payment_id):
+        return _declined(
+            p, "already_settled",
+            f"{p.payment_id} already has a settlement row; money arrived, nothing to recover",
+        )
 
     attempts = store.attempts_for(p.payment_id)
     if attempts >= cfg.max_attempts:
