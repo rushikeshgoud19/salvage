@@ -133,13 +133,18 @@ flowchart TB
 
     B -->|"yes"| C
 
-    subgraph POLICY ["decide — timing is the policy"]
-        E --> F{stopping rules<br/>in order}
-        F -->|"attempts >= max"| S[SUPPRESSED]
-        F -->|"spend + cost > cap"| S
-        F -->|"outside timing window"| S
-        F -->|"nudge in quiet hours"| S
-        F -->|"clear"| G[Intervention]
+    subgraph POLICY ["decide — five stopping rules, checked in this order"]
+        E --> F1{"1 · already settled?"}
+        F1 -->|"yes"| S["SUPPRESSED<br/>names the rule that fired"]
+        F1 -->|"no"| F2{"2 · attempts >= max?"}
+        F2 -->|"yes"| S
+        F2 -->|"no"| F3{"3 · spend + cost > cap?"}
+        F3 -->|"yes"| S
+        F3 -->|"no"| F4{"4 · outside timing window?"}
+        F4 -->|"yes"| S
+        F4 -->|"no"| F5{"5 · nudge in quiet hours?"}
+        F5 -->|"yes"| S
+        F5 -->|"no"| G[Intervention]
     end
 
     G --> H[execute the money action]
@@ -163,6 +168,7 @@ flowchart TB
     style L fill:#5c2b2b,stroke:#f87171,color:#ffecec
     style K fill:#1f4d3d,stroke:#4ade80,color:#e8fff5
     style M fill:#3a3a5c,stroke:#8fa8d0,color:#e6ecff
+    style F1 fill:#4a3320,stroke:#d29922,color:#ffeccc
 ```
 
 ### The gate, precisely
