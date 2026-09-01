@@ -202,12 +202,46 @@ def prove_offline_touches_no_network(work: str) -> Proof:
     )
 
 
+# ── 6 ───────────────────────────────────────────────────────────────────────────
+def prove_the_gate_is_not_specific_to_recovery(work: str) -> Proof:
+    """Claim: the same verification gate catches the same bug on a different money path.
+
+    Refunds share no client, no store, no policy and no code with the recovery loop. The
+    only thing they have in common is stepproof. If the failure this project describes is
+    really about agents rather than about recovery, the gate should catch it here too --
+    and the refund version is worse, because a customer who was told they were refunded
+    and has no money raises a chargeback.
+    """
+    from salvage.refunds import RefundClient, refund
+
+    previous = stepproof.get_ledger()
+    stepproof.set_ledger(stepproof.Ledger(os.path.join(work, "refunds.jsonl")))
+    try:
+        client = RefundClient()
+        outcomes = [refund(client, f"pay_r{i:04d}", 50000) for i in range(40)]
+    finally:
+        stepproof.set_ledger(previous)
+
+    claimed = [o for o in outcomes if o.claimed_ok]
+    processed = [o for o in outcomes if o.processed is True]
+    stuck = [o for o in outcomes if "status=pending" in o.evidence]
+    return Proof(
+        name="not recovery-specific",
+        claim="the same gate catches the same bug on refunds, which share no code",
+        passed=len(claimed) == len(outcomes) and len(processed) < len(claimed) and bool(stuck),
+        evidence=(f"refunds: API returned 200 for {len(claimed)}/{len(outcomes)}, "
+                  f"{len(processed)} actually processed, {len(stuck)} stuck at "
+                  f"status=pending with the customer expecting money"),
+    )
+
+
 CHECKS: tuple[Callable[[str], Proof], ...] = (
     prove_forged_seal_is_caught,
     prove_a_paid_customer_is_never_charged_again,
     prove_a_hostile_description_gains_no_authority,
     prove_a_201_is_not_a_recovery,
     prove_offline_touches_no_network,
+    prove_the_gate_is_not_specific_to_recovery,
 )
 
 

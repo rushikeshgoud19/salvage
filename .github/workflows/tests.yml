@@ -44,6 +44,10 @@ jobs:
       - name: The demo runs with no credentials at all
         run: python -m salvage demo
 
+      # If a guarantee regresses, this goes red before a reviewer discovers it by hand.
+      - name: The repo proves its own claims
+        run: python -m salvage prove
+
       - name: RESULTS.md was actually written
         shell: python
         run: |

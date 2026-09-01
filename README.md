@@ -360,9 +360,11 @@ salvage/
   pipeline.py    the record loop. never raises.
   metrics.py     the scoring — verified seals only
   baseline.py    the same run scored the way everyone else scores it
+  prove.py       six adversarial checks against this repo's own claims
+  refunds.py     a second money path, sharing nothing but the verification gate
   audit.py       hash-chain integrity
   report.py      RESULTS.md
-  cli.py         generate / run / report / demo / sweep
+  cli.py         generate / run / report / demo / sweep / prove
 .agents/         the plan, the frozen contract, the QA grading, what each lane hit
 docs/            ROBUSTNESS.md (20-batch sweep) · LIVE-RUN.md (live test-mode transcript)
 fixtures/        recorded Razorpay responses and recorded model verdicts
