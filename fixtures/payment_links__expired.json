@@ -1,0 +1,32 @@
+{
+  "accept_partial": false,
+  "amount": 45000,
+  "amount_paid": 0,
+  "cancelled_at": 0,
+  "created_at": 1756684800,
+  "currency": "INR",
+  "customer": {
+    "contact": "+919000000001",
+    "email": "cust0001@example.invalid",
+    "name": ""
+  },
+  "description": "Salvage recovery link",
+  "expire_by": 1757289600,
+  "expired_at": 1757289600,
+  "first_min_partial_amount": 0,
+  "id": "plink_QhK2mN4pXwT8vA",
+  "notes": [],
+  "notify": {
+    "email": false,
+    "sms": false,
+    "whatsapp": false
+  },
+  "payments": null,
+  "reference_id": "pay_QhK2mN4pXwT8vA",
+  "reminder_enable": false,
+  "reminders": [],
+  "short_url": "https://rzp.io/i/QhK2mN4p",
+  "status": "expired",
+  "updated_at": 1757289600,
+  "user_id": ""
+}
