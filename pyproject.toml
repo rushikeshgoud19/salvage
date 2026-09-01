@@ -34,6 +34,14 @@ salvage = "salvage.cli:app"
 [project.urls]
 Homepage = "https://github.com/rushikeshgoud19/salvage"
 
+# stepproof is pulled straight from its public repo (a PEP 508 direct reference) so that
+# `pip install .` works in one command on a clean machine. Hatchling refuses direct
+# references unless this is explicit, which is a sensible default and which meant the
+# install command in the README had never actually worked anywhere except a machine that
+# already had stepproof installed. CI caught it on its first run.
+[tool.hatch.metadata]
+allow-direct-references = true
+
 [tool.hatch.build.targets.wheel]
 packages = ["salvage"]
 
