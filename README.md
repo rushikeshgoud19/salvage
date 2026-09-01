@@ -107,9 +107,49 @@ against recorded Razorpay fixtures and recorded model verdicts, writes
 [`RESULTS.md`](RESULTS.md). Seven seconds.
 
 ```bash
-python -m pytest tests/ -q      # 441 passed — and asserted network-free
+python -m pytest tests/ -q      # 478 passed — and asserted network-free
 python -m salvage sweep         # reproduce the 20-batch table above
 ```
+
+### Don't trust this README — make it prove itself
+
+```bash
+python -m salvage prove
+```
+
+Ten seconds, no credentials. Six adversarial checks that try to make salvage do the things
+this page says it cannot, quoting what they observed:
+
+```
+PASS  forged seal — a ledger edited to fake a recovery no longer verifies
+      before: chain intact (5 records) | after: record 2 was modified after sealing...
+PASS  double charge — a customer who already paid is never charged again
+      unsettled -> retry; after settlement all 8 reasons -> none/already_settled
+PASS  prompt injection — hostile gateway text cannot choose an action or leak a secret
+      model returned insufficient_funds @0.75 (typed, in-vocabulary); policy chose retry
+PASS  fabricated recovery — an action that returned 2xx but moved no money is not counted
+      40 actions reported success, 18 counted as recovered, 6 caught at status=created
+PASS  offline guarantee — the demo path opens no socket
+      20 records + a link issued, 0 network calls
+PASS  not recovery-specific — the same gate catches the same bug on refunds
+      API returned 200 for 40/40, 30 actually processed, 8 stuck at status=pending
+```
+
+A check that cannot run is a FAIL, never a skip. **CI runs this on every push**, and two of
+its own tests deliberately break the underlying guarantee to confirm the checks go red
+rather than staying green out of habit.
+
+### The last line is the one that matters
+
+`salvage/refunds.py` is a second money path — a different endpoint, the opposite direction
+of money, and **no shared client, store, policy or code with the recovery loop**. A test
+asserts that isolation. The only thing the two have in common is stepproof.
+
+The API returns `200` for all 40 refunds. Ten never move money, and eight sit at
+`status=pending` — where the customer has no refund and believes they do, which is a
+chargeback and a support ticket. Same gate, same bug, a money path that shares nothing.
+
+That is the difference between claiming this generalises past recovery and showing it.
 
 ---
 
