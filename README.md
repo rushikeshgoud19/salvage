@@ -34,6 +34,7 @@ nobody checked.
 | **[docs/PRODUCTION.md](docs/PRODUCTION.md)** | what would have to change to run it at Razorpay volume, with measured numbers |
 | **[docs/LIVE-RUN.md](docs/LIVE-RUN.md)** | a full run against live Razorpay test mode, including the two things that went wrong |
 | **[docs/ROBUSTNESS.md](docs/ROBUSTNESS.md)** | the same pipeline across 20 independent batches |
+| **[docs/FAQ.md](docs/FAQ.md)** | the hard questions answered directly — synthetic data, only 4.2% LLM, and whether I actually built this |
 | **[.agents/](.agents/)** | the frozen contract, the plan, and the QA report that grades where the plan was wrong |
 
 ---
