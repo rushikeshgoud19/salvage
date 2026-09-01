@@ -16,19 +16,31 @@ typed diagnostic. It never selects an action, never touches money, and its prose
 evidence (Contract §5.3): a rationale used as a stepproof evidence string would be flipped
 to `verified=False` by the narration guard, turning a real recovery into a reported failure.
 
-With no `ANTHROPIC_API_KEY` set — the state of the machine this was built on — no call is
+With no key set and no recorded verdict, no call is
 attempted and every record is settled by the rules. A record the rules cannot settle then
 stays `UNKNOWN`: an honest "no cause established" beats a guess dressed as a diagnosis.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 
 from salvage.types import FailedPayment, FailureReason, RootCause
 
-_MODEL = "claude-opus-5"
-_MAX_TOKENS = 2048
+# Any OpenAI-compatible endpoint. Mistral by default because its free tier needs no card;
+# Gemini, Groq, Cerebras and OpenRouter all speak the same protocol, so switching provider
+# is two environment variables and no code. The key is read from SALVAGE_LLM_API_KEY or,
+# failing that, MISTRAL_API_KEY.
+_BASE_URL = os.environ.get("SALVAGE_LLM_BASE_URL", "https://api.mistral.ai/v1")
+_MODEL = os.environ.get("SALVAGE_LLM_MODEL", "mistral-small-latest")
+_MAX_TOKENS = 512
+_TIMEOUT_S = 45.0
+# Verdicts are cached by prompt hash. The batch is deterministic, so one recorded run makes
+# every later run — including a judge's clone with no key at all — free, offline and
+# identical. Same discipline as the Razorpay fixtures.
+_CACHE_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                           "fixtures", "llm_verdicts.json")
 # Below this the model has not settled anything the rules had not already settled better.
 _MIN_MODEL_CONFIDENCE = 0.5
 
@@ -75,6 +87,10 @@ _SYSTEM = (
     " words, citing the fields you used. You are diagnosing only: you do not choose an"
     " action and you do not decide whether money moved. If the fields do not support a"
     ' diagnosis, answer "unknown" with low confidence.'
+    " Domain base rate you must weigh: in Indian card payments a bare issuer"
+    " 'card_declined' carries no cause of its own and most often masks insufficient funds;"
+    " an issuer risk block is a real but much smaller share. Do not read a bare decline as"
+    " an authentication failure — a failed OTP or CVV reports itself explicitly."
 )
 
 
@@ -158,39 +174,99 @@ def classify(p: FailedPayment) -> RootCause:
 def _ask_model(p: FailedPayment) -> RootCause | None:
     """Ask the model for a typed diagnostic. Returns None on any failure — never raises.
 
-    Every exit that is not a confident, well-formed, in-vocabulary answer returns None so
-    the caller falls back to the rules verdict. A classifier that dies on a timeout would
-    take a 240-record batch with it.
+    Cache first, network second. Every exit that is not a confident, well-formed,
+    in-vocabulary answer returns None so the caller falls back to the rules verdict. A
+    classifier that died on a timeout would take a 240-record batch with it.
     """
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        return None
-    try:
-        import anthropic
+    prompt = _prompt(p)
+    key = hashlib.sha256(
+        "|".join((_MODEL, _SYSTEM, prompt)).encode("utf-8")
+    ).hexdigest()[:32]
 
-        response = anthropic.Anthropic().messages.create(
-            model=_MODEL,
-            max_tokens=_MAX_TOKENS,
-            system=_SYSTEM,
-            messages=[{"role": "user", "content": _prompt(p)}],
+    cached = _cache_read().get(key)
+    if cached is not None:
+        return _to_cause(p, cached, cached_hit=True)
+
+    api_key = os.environ.get("SALVAGE_LLM_API_KEY") or os.environ.get("MISTRAL_API_KEY")
+    if not api_key:
+        return None                     # no key and no cache entry: the rules answer stands
+    try:
+        import httpx
+
+        response = httpx.post(
+            f"{_BASE_URL}/chat/completions",
+            headers={"Authorization": f"Bearer {api_key}"},
+            timeout=_TIMEOUT_S,
+            json={
+                "model": _MODEL,
+                "temperature": 0,          # a diagnosis must not change between runs
+                "max_tokens": _MAX_TOKENS,
+                "response_format": {"type": "json_object"},
+                "messages": [
+                    {"role": "system", "content": _SYSTEM},
+                    {"role": "user", "content": prompt},
+                ],
+            },
         )
-        text = "".join(
-            block.text for block in response.content if getattr(block, "type", "") == "text"
-        ).strip()
+        if response.status_code != 200:
+            return None
+        text = response.json()["choices"][0]["message"]["content"].strip()
         data = json.loads(_unfence(text))
-        reason = FailureReason(str(data["reason"]))
-        confidence = float(data["confidence"])
+        payload = {
+            "reason": str(data["reason"]),
+            "confidence": float(data["confidence"]),
+            "rationale": str(data.get("rationale", "")).strip()[:200],
+            "model": _MODEL,
+        }
+        FailureReason(payload["reason"])            # reject an out-of-vocabulary answer
+        if not 0.0 <= payload["confidence"] <= 1.0:
+            return None
+    except Exception:
+        return None
+
+    _cache_write(key, payload)
+    return _to_cause(p, payload, cached_hit=False)
+
+
+def _to_cause(p: FailedPayment, payload: dict, cached_hit: bool) -> RootCause | None:
+    """Turn a cached or fresh model payload into a RootCause. None if it is malformed."""
+    try:
+        reason = FailureReason(str(payload["reason"]))
+        confidence = float(payload["confidence"])
     except Exception:
         return None
     if not 0.0 <= confidence <= 1.0:
         return None
-    prose = str(data.get("rationale", "")).strip()[:200]
-    # "llm" first: the harness counts this token to report the rules/model split.
+    prose = str(payload.get("rationale", "")).strip()[:200]
+    note = " (replayed from recorded verdict)" if cached_hit else ""
+    # "llm" first: the harness counts this token to report the rules/model split. A replayed
+    # verdict is still the model's verdict, so it is still counted as one.
     return RootCause(
         payment_id=p.payment_id,
         reason=reason,
         confidence=confidence,
-        rationale=f"llm {prose}",
+        rationale=f"llm {prose}{note}",
     )
+
+
+def _cache_read() -> dict:
+    try:
+        with open(_CACHE_PATH, encoding="utf-8") as handle:
+            return json.load(handle)
+    except (OSError, ValueError):
+        return {}                       # a missing or corrupt cache is simply a cache miss
+
+
+def _cache_write(key: str, payload: dict) -> None:
+    """Append one verdict. Best-effort: a read-only checkout must still classify."""
+    try:
+        os.makedirs(os.path.dirname(_CACHE_PATH), exist_ok=True)
+        store = _cache_read()
+        store[key] = payload
+        with open(_CACHE_PATH, "w", encoding="utf-8") as handle:
+            json.dump(store, handle, indent=2, sort_keys=True)
+    except OSError:
+        pass
 
 
 def _prompt(p: FailedPayment) -> str:

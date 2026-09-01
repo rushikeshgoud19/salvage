@@ -69,7 +69,8 @@ def make_payment(gateway_code: str = "insufficient_funds", source: str = "custom
 @pytest.fixture(autouse=True)
 def no_credentials(monkeypatch):
     """Every test runs in the state the machine is actually in: no keys at all."""
-    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    for _var in ("SALVAGE_LLM_API_KEY", "MISTRAL_API_KEY"):
+        monkeypatch.delenv(_var, raising=False)
 
 
 # -- rules ------------------------------------------------------------------------------
@@ -176,13 +177,33 @@ def test_an_unconvincing_model_verdict_is_discarded_for_the_rules(monkeypatch):
     assert "below the 0.5 floor" in cause.rationale
 
 
-def test_an_unreachable_model_leaves_the_cause_unknown_rather_than_guessed():
+def test_an_unreachable_model_leaves_the_cause_unknown_rather_than_guessed(
+    monkeypatch, tmp_path
+):
+    """With no key and no recorded verdict, an unsettleable record stays UNKNOWN.
+
+    The environment is stripped explicitly. `salvage/__init__` loads a developer `.env` on
+    import, so without this the test would reach the real API — a suite that quietly makes
+    a paid network call is a suite nobody can trust or run offline.
+    """
+    for var in ("SALVAGE_LLM_API_KEY", "MISTRAL_API_KEY"):
+        monkeypatch.delenv(var, raising=False)
+    monkeypatch.setattr(classify_mod, "_CACHE_PATH", str(tmp_path / "absent.json"))
     cause = classify(make_payment("card_declined", "gateway"))
     assert cause.reason is FailureReason.UNKNOWN
     assert "no cause was invented" in cause.rationale
 
 
-def test_ask_model_returns_none_without_a_key():
+def test_ask_model_returns_none_without_a_key(monkeypatch, tmp_path):
+    """No key AND no recorded verdict means no cause is invented.
+
+    The cache is redirected at a path that does not exist: a recorded verdict is a legitimate
+    answer without a key — that is the whole point of recording it — so leaving the real
+    cache in place would test the opposite of what this asserts.
+    """
+    for var in ("SALVAGE_LLM_API_KEY", "MISTRAL_API_KEY"):
+        monkeypatch.delenv(var, raising=False)
+    monkeypatch.setattr(classify_mod, "_CACHE_PATH", str(tmp_path / "absent.json"))
     assert classify_mod._ask_model(make_payment("card_declined")) is None
 
 

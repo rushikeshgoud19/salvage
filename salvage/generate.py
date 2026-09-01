@@ -17,6 +17,7 @@ import hashlib
 import json
 import os
 import random
+import re
 from dataclasses import dataclass
 
 from salvage.types import FailedPayment, FailureReason, GroundTruth
@@ -184,6 +185,8 @@ _SELF_HEAL_WINDOW_S: dict[FailureReason, tuple[float, float]] = {
 }
 
 
+_RECURRING_DIGITS = re.compile(r"(\d)\1{3,}")
+
 def generate_batch(n: int = 240, seed: int = 7,
                    holdout_frac: float = 0.20) -> tuple[list[FailedPayment], list[GroundTruth]]:
     """Build `n` failed payments and their hidden labels, deterministically."""
@@ -210,7 +213,14 @@ def generate_batch(n: int = 240, seed: int = 7,
         amount_paise = _sample_amount_paise(rng)
         failed_at = round(BATCH_ANCHOR_S - rng.uniform(0.0, _WINDOW_S), 3)
         attempt_no = rng.choices((1, 2, 3), weights=(0.75, 0.18, 0.07), k=1)[0]
-        phone = "+91" + rng.choice("6789") + "".join(rng.choices("0123456789", k=9))
+        # Razorpay rejects a contact with four or more of the same digit in a row --
+        # "Recurring digits in customer contact are disallowed", HTTP 400, confirmed against
+        # live test mode. One number in 240 tripped it, which is one dead record in a
+        # --record run and a confusing one to debug. Resample instead of shipping it.
+        while True:
+            phone = "+91" + rng.choice("6789") + "".join(rng.choices("0123456789", k=9))
+            if not _RECURRING_DIGITS.search(phone):
+                break
         heals = rng.random() < _SELF_HEAL_P[family]
         heal_after = _sample_self_heal_after(rng, family) if heals else NEVER_SELF_HEALS
 

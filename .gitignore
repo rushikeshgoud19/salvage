@@ -7,3 +7,8 @@ data/
 .pytest_cache/
 build/
 dist/
+
+# Secrets. Never commit. The repo is public.
+.env
+.env.*
+!.env.example
